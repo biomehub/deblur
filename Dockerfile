@@ -14,4 +14,5 @@ RUN echo "source activate deblurenv" > ~/.bashrc
 
 ENV PATH /opt/conda/envs/deblurenv/bin:$PATH    
 ENV export LC_ALL=C.UTF-8
-ENV export LANG=C.UTF-8 
+ENV export LANG=C.UTF-8
+ 
