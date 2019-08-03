@@ -22,7 +22,7 @@ RUN sh Miniconda3-latest-Linux-x86_64.sh -b; \
 	source activate deblurenv; \
 	/root/miniconda3/bin/conda init bash; \
 
-SHELL ["bash", "-lc"]
+RUN bash
 
 RUN conda install -c bioconda -c biocore -y  "VSEARCH=2.7.0" MAFFT=7.310 SortMeRNA=2.0 biom-format deblur; \
     export LC_ALL=C.UTF-8; \
