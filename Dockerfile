@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM continuumio/miniconda3:latest
 ENV DEBIAN_FRONTEND noninteractive
 MAINTAINER BiomeHub
 
@@ -6,26 +6,12 @@ LABEL version="1.1.0"
 LABEL software.version="1.1.0"
 LABEL software="deblur"
 
-RUN apt-get -y update; \
-    apt-get -y upgrade
-    
-RUN apt-get install -y build-essential
-    
-RUN apt-get install -y wget unzip
+COPY environment.yaml ./
 
-RUN apt-get clean
+RUN conda env create -f environment.yaml
 
-RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+RUN echo "source activate deblurenv" > ~/.bashrc
 
-RUN sh Miniconda3-latest-Linux-x86_64.sh -b; \
-    /root/miniconda3/bin/conda create -y -n deblurenv python=3.5 numpy; \
-	source activate deblurenv; \
-	/root/miniconda3/bin/conda init bash; \
-
-RUN bash
-
-RUN conda install -c bioconda -c biocore -y  "VSEARCH=2.7.0" MAFFT=7.310 SortMeRNA=2.0 biom-format deblur; \
-    export LC_ALL=C.UTF-8; \
-	export LANG=C.UTF-8
-
-ENV PATH /root/miniconda3/envs/deblurenv/bin/:$PATH
+ENV PATH /opt/conda/envs/deblurenv/bin:$PATH    
+ENV export LC_ALL=C.UTF-8
+ENV export LANG=C.UTF-8 
